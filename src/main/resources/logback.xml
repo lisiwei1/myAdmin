@@ -1,0 +1,86 @@
+<configuration scan="true" scanPeriod="60 seconds">
+	<!-- 日志文件输出路径 -->
+	<property name="LOG_HOME" value="./logs" />
+	<!-- 日志格式 -->
+	<property name="LOG_FORMAT"
+		value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [%logger{100}:%line] - %msg%n" />
+	<!-- 日志文件保存时间 -->
+	<property name="LOG_HISTORY" value="30" />
+	<!-- 输出日志到控制台 -->
+	<Appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${LOG_FORMAT}</pattern>
+		</encoder>
+	</Appender>
+	<!-- 普通日志输出 -->
+	<Appender name="INFO_LOG"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/log_%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>${LOG_HISTORY}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_FORMAT}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</Appender>
+	<!-- 错误日志输出 -->
+	<Appender name="ERROR_LOG"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/error_%d{yyyyMMdd}.log
+			</fileNamePattern>
+			<maxHistory>${LOG_HISTORY}</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder>
+			<pattern>${LOG_FORMAT}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</Appender>
+	<!-- LogPackage日志输出 -->
+	<Appender name="LOG_PACKAGE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/logPackage/log_%d{yyyyMMdd}.log
+			</fileNamePattern>
+			<maxHistory>${LOG_HISTORY}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_FORMAT}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</Appender>
+<!--	<Appender name="LOGSTASH"-->
+<!--		class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--		<destination>127.0.0.1:8041</destination>-->
+<!--		<encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
+<!--			<providers>-->
+<!--				<timestamp />-->
+<!--				<version />-->
+<!--				<message />-->
+<!--				<loggerName />-->
+<!--				<threadName />-->
+<!--				<logLevel />-->
+<!--				<callerData />-->
+<!--			</providers>-->
+<!--		</encoder>-->
+<!--	</Appender>-->
+	<logger name="LogPackage" level="INFO">
+		<appender-ref ref="LOG_PACKAGE" />
+<!--		<appender-ref ref="LOGSTASH" />-->
+	</logger>
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="INFO_LOG" />
+		<appender-ref ref="ERROR_LOG" />
+	</root>
+</configuration>
