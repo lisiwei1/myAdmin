@@ -27,7 +27,7 @@ public class AdminInterceptorConfig implements WebMvcConfigurer {
         patterns.add("/admin/login/loginUser");
 
         registry.addInterceptor(adminInterceptor)
-                .addPathPatterns("/**")
+                .addPathPatterns("/admin/**")
                 .excludePathPatterns(patterns);
         WebMvcConfigurer.super.addInterceptors(registry);
     }
