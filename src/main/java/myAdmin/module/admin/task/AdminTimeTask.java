@@ -1,4 +1,4 @@
-package cn.gd.winning.hpsp.module.admin.task;
+package myAdmin.module.admin.task;
 
 import javax.annotation.PostConstruct;
 
@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cn.gd.winning.hpsp.module.admin.service.AdminConfigService;
+import myAdmin.module.admin.service.AdminConfigService;
 
 @Component
 public class AdminTimeTask {
